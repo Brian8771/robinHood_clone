@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const listSchema = new mongoose.Schema({
+const watchlistSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -15,3 +15,5 @@ const listSchema = new mongoose.Schema({
         required: true
     }
 })
+
+module.exports = mongoose.model('watchList', watchlistSchema)

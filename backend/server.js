@@ -22,7 +22,9 @@ app.use(express.json())
 
 app.use(cookieParser())
 
-app.use('/auth', require('./routes/authRoutes.js'))
+app.use('/user', require('./routes/userRoutes'))
+
+app.use('/stocks', require('./routes/stockRoutes'))
 
 // Routes go here
 

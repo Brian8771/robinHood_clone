@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 100000
     },
+    stocks: {
+        type: [Object],
+        default: []
+    }
 
 })
 

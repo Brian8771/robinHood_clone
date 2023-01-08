@@ -12,13 +12,8 @@ const stockSchema = new mongoose.Schema({
     },
     quantity: {
         type: Number,
-        required: true
+        required: true,
     },
-    buy: {
-        type: Boolean,
-        default: true
-    }
-
 })
 
 module.exports = mongoose.model('Stock', stockSchema)
