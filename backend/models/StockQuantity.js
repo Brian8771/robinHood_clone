@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const stockSchema = new mongoose.Schema({
+const stockQuantitySchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -16,4 +16,4 @@ const stockSchema = new mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model('Stock', stockSchema)
+module.exports = mongoose.model('StockQuantity', stockQuantitySchema)

@@ -4,5 +4,6 @@ const stocksController = require('../controllers/stocksController')
 
 router.route('/')
     .post(stocksController.buyNewStock)
+    .patch(stocksController.sellStock)
 
 module.exports = router

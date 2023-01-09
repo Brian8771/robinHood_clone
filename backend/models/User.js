@@ -20,10 +20,6 @@ const userSchema = new mongoose.Schema({
     buyingPower: {
         type: Number,
         default: 100000
-    },
-    stocks: {
-        type: [Object],
-        default: []
     }
 
 })
