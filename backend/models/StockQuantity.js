@@ -14,6 +14,10 @@ const stockQuantitySchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    totalPrice: {
+        type: Number,
+        required: true
+    }
 })
 
 module.exports = mongoose.model('StockQuantity', stockQuantitySchema)

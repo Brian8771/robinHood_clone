@@ -26,6 +26,8 @@ app.use('/user', require('./routes/userRoutes'))
 
 app.use('/stocks', require('./routes/stockRoutes'))
 
+app.use('/watchlists', require('./routes/listRoutes'))
+
 // Routes go here
 
 app.use(errorHandler)
