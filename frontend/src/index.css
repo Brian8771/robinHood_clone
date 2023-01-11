@@ -8,6 +8,6 @@
   box-sizing: border-box;
 }
 
-.input-box:focus {
-  outline: green;
+.background-color {
+  background: #82c8d2;
 }

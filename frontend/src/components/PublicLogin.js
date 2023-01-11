@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import loginImage from '../images/robinhood-login-image.jpeg'
+import useTitle from '../hooks/useTitle'
 import '../index.css'
 
 const PublicLogin = () => {
+    useTitle('Login | Robinhood')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
     const [checked, setChecked] = useState(false)
+
 
     const handleUserInput = (e) => setUsername(e.target.value)
     const handlePasswordInput = (e) => setPassword(e.target.value)
@@ -17,7 +20,7 @@ const PublicLogin = () => {
 
     return (
         <main className="flex flex-row">
-            <img className="hidden md:w-1/2 md:h-screen md:object-cover md:block" src={loginImage} />
+            <img className="hidden md:w-1/2 md:h-screen md:object-cover md:block" src={loginImage} alt='robinghood-login-pic' />
             <div className="w-full flex flex-col justify-center md:w-1/2 h-scree">
                 <form className="flex flex-col h-screen justify-center" onSubmit={cancelDefault}>
                     <div className="w-9/12 lg:w-[55%] flex flex-col ml-11">
@@ -61,7 +64,7 @@ const PublicLogin = () => {
                         <div className="mb-4 flex justify-center md:block">
                             <button className="text-[13px] h-11 px-12 font-medium bg-black rounded-full text-white w-full md:w-fit">Log In</button>
                         </div>
-                        <p className="text-[13px]">Not on Robinhood? <span className=" font-bold text-[13px] underline">Create an account</span></p>
+                        <p className="text-[13px]">Not on Robinhood? <Link to='/signup' className=" font-bold text-[13px] underline">Create an account</Link></p>
                     </div>
 
                 </form>
