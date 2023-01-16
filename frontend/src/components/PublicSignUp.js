@@ -79,8 +79,8 @@ const PublicSignUp = () => {
                     </div>
                     <div className="w-full  max-h-full md:w-1/2 overflow-hidden">
 
-                        <form className="max-h-[80%] min-h-[80%] px-[64px] mb-12 pt-[110px]" onSubmit={(e) => e.preventDefault()}>
-                            <h2 className="text-[21px] mb-12">
+                        <form className="max-h-[80%] min-h-[80%] px-6 md:px-[64px] mb-12 pt-6 md:pt-[110px]" onSubmit={(e) => e.preventDefault()}>
+                            <h2 className="text-[15px] mb-12 md:text-[21px]">
                                 Enter your first and last name as they appear on your government ID.
                             </h2>
                             <div className="w-full flex font-light justify-center items-center py-4 px-3.5 border-solid border border-[#d5d8db] focus-within:border-black duration-700 mb-6">
