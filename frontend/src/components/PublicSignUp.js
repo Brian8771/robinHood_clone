@@ -22,7 +22,7 @@ const PublicSignUp = () => {
 
     return (
         <>
-            < header className="flex justify-center bg-white items-center border-b border solid border-black h-[69px] sticky w-full top-0  md:hidden" >
+            < header className="flex justify-center bg-white items-center border-b border solid border-black h-[69px] border-t-0 relative w-full top-0  md:hidden" >
                 <img className='h-14 w-14' src={robinLogo} alt='logo' />
             </header >
             <main className="overflow-hidden">
@@ -42,7 +42,7 @@ const PublicSignUp = () => {
                     </div>
                 </div>
                 <div className="flex flex-row">
-                    <div className="background-color w-1/2  pb-[36px] overflow-hidden flex-col relative h-full min-h-[100vh] max-h-[100vh] border-r-black border-solid border sm:hidden md:block">
+                    <div className="background-color w-1/2  pb-[36px] overflow-hidden flex-col relative h-full min-h-[100vh] max-h-[100vh] border-r-black border-solid border hidden md:block">
 
                         <div className="mt-[40px] mb-[80px]">
                             <div className="w-[147px] h-[48px] mx-16 flex justify-start items-center">
@@ -135,8 +135,8 @@ const PublicSignUp = () => {
                             </div>
                             <p className="text-[13px] mt-6 text-[#99a0a3]">This is not a real stock market app all that you do on the site will have no real impact on the stock market</p>
                         </form>
-                        <div className="justify-center border-none px-6 py-8 flex items-center max-h-[20%] md:border-t-2 md:border-solid md:border-black md:justify-end">
-                            <button className="w-1/2 px-[48px] h-12 bg-black text-white rounded-full md:w-auto">
+                        <div className="justify-center py-2 border-none px-6 md:py-8 flex items-center max-h-[20%] md:border-t-2 md:border-solid md:border-black md:justify-end">
+                            <button className="w-full px-[48px] h-12 bg-black text-white rounded-full md:w-auto">
                                 Sign up
                             </button>
                         </div>

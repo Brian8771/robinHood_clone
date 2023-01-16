@@ -59,7 +59,7 @@ const PublicLogin = () => {
                                 <div className="h-4 w-4 border border-solid border-slate-500 rounded-sm">
                                 </div>
                             }
-                            <span className="ml-3">Keep me loggin in for up to 30 days</span>
+                            <span className="ml-3">Keep me logged in for up to 30 days</span>
                         </label>
                         <div className="mb-4 flex justify-center md:block">
                             <button className="text-[13px] h-11 px-12 font-medium bg-black rounded-full text-white w-full md:w-fit">Log In</button>
