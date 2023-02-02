@@ -2,10 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
+*,
+#root {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+#image-block {
+  background-image: url('./images/intro-background.png');
 }
 
 .background-color {

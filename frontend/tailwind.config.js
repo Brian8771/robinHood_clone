@@ -9,7 +9,11 @@ module.exports = {
       'serif': ['Capsule Sans Text', '-apple-system ', 'BlinkMacSystemFont', 'sans-serif'],
       'mono': ['Capsule Sans Text', '-apple-system ', 'BlinkMacSystemFont', 'sans-serif'],
     },
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'intro': "url('./src/images/intro-background.png')"
+      }
+    },
   },
   plugins: [],
 }

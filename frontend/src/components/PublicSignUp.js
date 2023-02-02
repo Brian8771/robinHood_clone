@@ -42,7 +42,7 @@ const PublicSignUp = () => {
                     </div>
                 </div>
                 <div className="flex flex-row">
-                    <div className="background-color w-1/2  pb-[36px] overflow-hidden flex-col relative h-full min-h-[100vh] max-h-[100vh] border-r-black border-solid border hidden md:block">
+                    <div className="background-color w-1/2  pb-[36px] overflow-hidden flex-col h-full min-h-full max-h-[100vh] border-r-black border-solid border hidden md:block">
 
                         <div className="mt-[40px] mb-[80px]">
                             <div className="w-[147px] h-[48px] mx-16 flex justify-start items-center">
@@ -64,7 +64,7 @@ const PublicSignUp = () => {
                                 </svg>
                             </div>
                         </div>
-                        <div className="flex flex-col h-[100%] gap-[48px]">
+                        <div className="flex flex-col min-h-full max-h-full gap-[48px]">
                             <div>
                                 <h2 className="text-[72px] px-16">Create your login</h2>
                             </div>
@@ -77,9 +77,9 @@ const PublicSignUp = () => {
                         </div>
 
                     </div>
-                    <div className="w-full  max-h-full md:w-1/2 overflow-hidden">
+                    <div className="w-full min-h-full  max-h-[100vh] md:w-1/2 overflow-hidden">
 
-                        <form className="max-h-[80%] min-h-[80%] px-6 md:px-[64px] mb-12 pt-6 md:pt-[110px]" onSubmit={(e) => e.preventDefault()}>
+                        <form className="max-h-[80%] min-h-[80%] px-6 md:px-[64px] mb-12 pt-6 md:pt-[110px] md:overflow-y-auto" onSubmit={(e) => e.preventDefault()}>
                             <h2 className="text-[15px] mb-12 md:text-[21px]">
                                 Enter your first and last name as they appear on your government ID.
                             </h2>
@@ -135,7 +135,7 @@ const PublicSignUp = () => {
                             </div>
                             <p className="text-[13px] mt-6 text-[#99a0a3]">This is not a real stock market app all that you do on the site will have no real impact on the stock market</p>
                         </form>
-                        <div className="justify-center py-2 border-none px-6 md:py-8 flex items-center max-h-[20%] md:border-t-2 md:border-solid md:border-black md:justify-end">
+                        <div className="justify-center py-2 border-none px-6 md:py-8 flex items-center max-h-[20%] md:border-t md:border-solid md:border-black md:justify-end">
                             <button className="w-full px-[48px] h-12 bg-black text-white rounded-full md:w-auto">
                                 Sign up
                             </button>
