@@ -24,7 +24,7 @@ const Public = () => {
                         </svg>
                     </div>
                     <div className="h-2/3 flex items-center md:hidden">
-                        <button className="text-[13px] border-solid border border-black bg-white text-black rounded-full px-7 h-full font-semibold whitespace-nowrap mr-3">Sign up</button>
+                        <button className="text-[13px] border-solid border border-black bg-white text-black rounded-full px-7 h-full font-semibold whitespace-nowrap mr-3">Log in</button>
                         <svg aria-hidden="true" fill="rgb(0, 0, 0)" height="30" width="30"><g><rect fill="transparent" height="30" width="30" x="0" y="0"></rect><rect height="3" width="30" x="0" y="7"></rect></g><g><rect fill="transparent" height="30" width="30" x="0" y="0"></rect><rect height="3" width="30" x="0" y="20"></rect></g></svg>
                     </div>
                     <div className="hidden h-2/3 md:flex">
@@ -36,7 +36,10 @@ const Public = () => {
             </header>
             <main>
                 <div className="min-w-full min-h-full grid justify-center">
-                    <h1 className='text-[72px] z-10 w-2/3'>Join a new generation of investors</h1>
+                    <div className='z-10 mt-10 text-center w-[400px] md:w-[650px] lg:w-[750px]  justify-center'>
+                        <div className='text-5xl md:text-6xl lg:text-7xl z-10'>Join a new generation of investors</div>
+                        <button className='mt-10 rounded-full bg-black text-white px-8 py-3 font-bold'>Sign up</button>
+                    </div>
 
                     <img className=' max-w-full min-w-full max-h-full min-h-full object-cover absolute -z-1' src={background} alt='background' />
                 </div>
