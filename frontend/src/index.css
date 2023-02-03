@@ -7,6 +7,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+}
+
+.grid-placer {
+  grid-template-areas: "stack";
+  place-items: center;
+}
+
+.grid-placer>* {
+  grid-area: stack;
 }
 
 #image-block {
