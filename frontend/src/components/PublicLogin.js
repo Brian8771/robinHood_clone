@@ -1,22 +1,52 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react"
+import { useNavigate, Link } from "react-router-dom"
 import loginImage from '../images/robinhood-login-image.jpeg'
 import useTitle from '../hooks/useTitle'
 import '../index.css'
+import { setCredentials } from "../features/auth/authSlice"
+import { useLoginMutation } from "../features/auth/authApiSlice"
+import { useDispatch } from "react-redux"
+import usePersist from "../hooks/usePersist"
+
 
 const PublicLogin = () => {
     useTitle('Login | Robinhood')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
-    const [checked, setChecked] = useState(false)
+    const [persist, setPersist] = usePersist()
+    const [login, { isLoading }] = useLoginMutation()
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
+
+
+    const cancelDefault = async (e) => {
+        e.preventDefault()
+
+        try {
+            const { accessToken } = await login({ username, password }).unwrap();
+            dispatch(setCredentials({ accessToken }))
+            navigate('/home')
+        }
+        catch (err) {
+
+        }
+    }
 
 
     const handleUserInput = (e) => setUsername(e.target.value)
     const handlePasswordInput = (e) => setPassword(e.target.value)
-    const handleCheckedInput = () => setChecked(prev => !prev)
-    const handleShowPWDInput = () => setShowPassword(prev => !prev)
-    const cancelDefault = (e) => e.preventDefault()
+    const handleShowPWDInput = (e) => {
+        e.preventDefault()
+        setShowPassword(prev => !prev)
+    }
+    const handleToggle = () => setPersist(prev => !prev)
+
+    if (isLoading) return (
+
+        <h1>Loading</h1>
+    )
 
     return (
         <main className="flex flex-row">
@@ -49,12 +79,12 @@ const PublicLogin = () => {
                                 autoComplete='off'
                             />
                             <button onClick={handleShowPWDInput} className="h-6 w-6 flex justify-center items-center">
-                                <svg fill="none" height="16" role="img" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M1 8s1.91-4.455 7-4.455S15 8 15 8s-1.91 4.454-7 4.454S1 8 1 8Zm4.773 0A2.23 2.23 0 0 0 8 10.227 2.23 2.23 0 0 0 10.227 8 2.23 2.23 0 0 0 8 5.773 2.23 2.23 0 0 0 5.773 8Z" fill="black" fill-rule="evenodd"></path></svg>
+                                <svg fill="none" height="16" role="img" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M1 8s1.91-4.455 7-4.455S15 8 15 8s-1.91 4.454-7 4.454S1 8 1 8Zm4.773 0A2.23 2.23 0 0 0 8 10.227 2.23 2.23 0 0 0 10.227 8 2.23 2.23 0 0 0 8 5.773 2.23 2.23 0 0 0 5.773 8Z" fill="black"></path></svg>
                             </button>
                         </div>
-                        <label onClick={handleCheckedInput} htmlFor='persist' className="text-[13px] flex mt-3 mb-8 items-center">
-                            {checked ? <div className="h-4 w-4 bg-[#00c806] rounded-sm">
-                                <svg height="16" role="img" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="m13.619 4.952-7.285 7.285-3.62-3.618L3.953 7.38l2.382 2.382 6.048-6.048 1.237 1.237Z" fill="white" fill-rule="evenodd"></path></svg>
+                        <label checked={persist} onClick={handleToggle} htmlFor='persist' className="text-[13px] flex mt-3 mb-8 items-center">
+                            {persist ? <div className="h-4 w-4 bg-[#00c806] rounded-sm">
+                                <svg height="16" role="img" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m13.619 4.952-7.285 7.285-3.62-3.618L3.953 7.38l2.382 2.382 6.048-6.048 1.237 1.237Z" fill="white" ></path></svg>
                             </div> :
                                 <div className="h-4 w-4 border border-solid border-slate-500 rounded-sm">
                                 </div>

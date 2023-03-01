@@ -1,6 +1,5 @@
 import { useState } from "react"
 import useTitle from "../hooks/useTitle"
-import { Link } from "react-router-dom"
 import robinLogo from '../images/robinhood-black.png'
 import robinSignSm from '../images/robinhood-signup.png'
 import robin_1 from '../images/robinhood-pic-1.png'

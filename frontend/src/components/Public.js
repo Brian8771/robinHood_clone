@@ -14,7 +14,7 @@ const Public = () => {
 
     return (
         <div className='w-screen'>
-            <header className="w-full px-6 border-solid border border-t-0 border-x-0 border-b-black">
+            <header className="w-full px-6 border-solid border border-t-0 border-x-0 border-b-black fixed bg-white">
                 <nav className="w-full h-16  flex justify-between items-center bg-white">
                     <div className=" h-full items-center flex">
                         <svg className="" xmlns="http://www.w3.org/2000/svg" width="142px" height="35px" viewBox="0 0 831 163" fill="none">
@@ -61,8 +61,8 @@ const Public = () => {
                 </div>
                 <div className='w-1/2 flex justify-around items-center border-l border-black'>
 
-                    <a className='findMe' href='https://github.com/Brian8771'><img style={{ height: '60px', width: '60px' }} src={github} /></a>
-                    <a className='findMe' href='https://www.linkedin.com/in/brian-aguilar-088438247/'><img style={{ height: '60px', width: '60px', borderRadius: '50%' }} src={linkedIn} /></a>
+                    <a className='findMe' href='https://github.com/Brian8771'><img style={{ height: '60px', width: '60px' }} src={github} alt='github' /></a>
+                    <a className='findMe' href='https://www.linkedin.com/in/brian-aguilar-088438247/'><img style={{ height: '60px', width: '60px', borderRadius: '50%' }} src={linkedIn} alt='linkedIn' /></a>
                 </div>
             </footer>
         </div>
