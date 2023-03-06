@@ -28,7 +28,9 @@ const login = async (req, res) => {
         {
             "UserInfo": {
                 "username": foundUser.username,
-                "roles": foundUser.roles
+                "firstname": foundUser.firstName,
+                "lastname": foundUser.lastName,
+                "buyingPower": foundUser.buyingPower
             }
         },
         process.env.ACCESS_TOKEN_SECRET,
@@ -77,7 +79,9 @@ const refresh = (req, res) => {
                 {
                     "UserInfo": {
                         "username": foundUser.username,
-                        "roles": foundUser.roles
+                        "firstname": foundUser.firstName,
+                        "lastname": foundUser.lastName,
+                        "buyingPower": foundUser.buyingPower
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,

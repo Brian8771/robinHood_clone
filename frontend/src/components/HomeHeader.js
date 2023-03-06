@@ -1,6 +1,25 @@
-
+import useAuth from "../hooks/useAuth";
+import '../index.css'
 
 const HomeHeader = () => {
+
+    const { firstname, lastname } = useAuth();
+
+    document.addEventListener('click', (e) => {
+        const clicker = document.getElementsByClassName('clicker')[0];
+        const box = document.getElementsByClassName('clickerBox')[0];
+        console.log(box.style.display)
+
+        if (clicker.contains(e.target)) {
+            box.style.display = 'block'
+            clicker.classList.add('active');
+        }
+        else if (!clicker.contains(e.target)) {
+            box.style.display = 'none'
+            clicker.classList.remove('active')
+        }
+    })
+
     return (
         <nav className="sticky top-0 px-14 py-5 flex justify-between items-center bg-white">
             <div className="absolute left-12">
@@ -10,7 +29,7 @@ const HomeHeader = () => {
             </div>
             <div className="flex items-center mx-auto w-[1024px]">
                 <div className="flex items-center border-slate-200 border rounded w-96 h-9 focus-within:shadow-lg focus-within:shadow-black-500/120">
-                    <svg className="ml-3" height="24" role="img" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M15.32 16.734a8 8 0 1 1 1.54-1.288l4.847 4.847-1.414 1.414-4.973-4.973ZM17 10a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z" className="fill-[#697277]" fill-rule="evenodd"></path></svg>
+                    <svg className="ml-3" height="24" role="img" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M15.32 16.734a8 8 0 1 1 1.54-1.288l4.847 4.847-1.414 1.414-4.973-4.973ZM17 10a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z" className="fill-[#697277]" fillRule="evenodd"></path></svg>
                     <input
                         type='text'
                         placeholder="Search"
@@ -19,7 +38,20 @@ const HomeHeader = () => {
                 </div>
             </div>
             <div className="absolute right-12 flex items-center">
-                <button className="text-sm font-bold hover:text-[rgba(0,180,5,1)] duration-500">Account</button>
+                <button className="clicker text-sm font-bold border-b-2 border-transparent hover:text-[rgba(0,180,5,1)] active:border-b-2 active:border-b-[rgba(0,180,5,1)] duration-500">Account</button>
+                <div className="inherit">
+                    <div className="clickerBox hidden absolute right-0 top-6 border border-gray w-60 min-h-[80px] rounded">
+                        <div className=" inherit border-b-2 h-12 flex items-center justify-start pl-2">
+                            <p className="font-bold">{firstname}<span className="pl-2">{lastname}</span></p>
+                        </div>
+                        <div className=" inherit h-12 flex items-center justify-start pl-2">
+                            <p>Profile</p>
+                        </div>
+                        <div className=" inherit border-t-2 h-12 flex items-center justify-start pl-2">
+                            <p>Log Out</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
     )
