@@ -12,5 +12,16 @@ const getChartPrices = async (req, res) => {
     res.json({ price: response.c })
 }
 
+const getGeneralNews = async (req, res) => {
 
-module.exports = { getChartPrices };
+    let data = await fetch(`https://finnhub.io/api/v1/news?category=general&token=${apiKey}`)
+    let response = await data.json()
+
+    let sliced = response.slice(0, 6);
+
+    res.json(sliced)
+
+}
+
+
+module.exports = { getChartPrices, getGeneralNews };
