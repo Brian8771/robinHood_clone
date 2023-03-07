@@ -23,5 +23,34 @@ const getGeneralNews = async (req, res) => {
 
 }
 
+const getSpecificNews = async (req, res) => {
+    const { symbol } = req.params;
+    const now = new Date()
+    let month;
+    let day;
+    if (now.getDate() < 10) {
+        day = '0' + String(now.getDate())
+    }
+    if (now.getMonth() < 10) {
+        month = '0' + String(now.getMonth() + 1)
+    } else month = String(now.getMonth())
+    let today = `${now.getFullYear()}-${month}-${day}`
+    let from;
+    if (Number(day) < 7) {
+        month = Number(month) - 1
+        month = '0' + String(month)
+        from = `${now.getFullYear()}-${month}-${28 - 3}`
+    }
+    else from = `${now.getFullYear()}-${month}-${day}`
+    let data = await fetch(`https://finnhub.io/api/v1/company-news?symbol=${symbol}&from=${from}&to=${today}&token=${apiKey}`)
+    let response = await data.json()
 
-module.exports = { getChartPrices, getGeneralNews };
+
+    let sliced = response.slice(0, 6);
+
+    res.json({ news: sliced })
+}
+
+
+
+module.exports = { getChartPrices, getGeneralNews, getSpecificNews };
