@@ -30,6 +30,8 @@ app.use('/stocks', require('./routes/stockRoutes'))
 
 app.use('/watchlists', require('./routes/listRoutes'))
 
+app.use('/legendHood', require('./routes/legendRoutes'))
+
 // Routes go here
 
 app.use(errorHandler)

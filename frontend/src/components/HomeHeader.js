@@ -8,7 +8,7 @@ const HomeHeader = () => {
     document.addEventListener('click', (e) => {
         const clicker = document.getElementsByClassName('clicker')[0];
         const box = document.getElementsByClassName('clickerBox')[0];
-        console.log(box.style.display)
+
 
         if (clicker.contains(e.target)) {
             box.style.display = 'block'
@@ -41,14 +41,16 @@ const HomeHeader = () => {
                 <button className="clicker text-sm font-bold border-b-2 border-transparent hover:text-[rgba(0,180,5,1)] active:border-b-2 active:border-b-[rgba(0,180,5,1)] duration-500">Account</button>
                 <div className="inherit">
                     <div className="clickerBox hidden absolute right-0 top-6 border border-gray w-60 min-h-[80px] rounded">
-                        <div className=" inherit border-b-2 h-12 flex items-center justify-start pl-2">
-                            <p className="font-bold">{firstname}<span className="pl-2">{lastname}</span></p>
+                        <div className="inherit border-b-2 h-12 flex items-center justify-start pl-2">
+                            <p className="font-bold text-sm">{firstname}<span className="pl-2">{lastname}</span></p>
                         </div>
-                        <div className=" inherit h-12 flex items-center justify-start pl-2">
-                            <p>Profile</p>
+                        <div className="inherit h-12 flex items-center justify-start pl-4">
+                            <svg className="_2n73ZJQbx9xo3mEGat0tis web-app-emotion-cache-1dfpwxr" width="20" height="20" viewBox="0 0 20 20"><path fillRule="evenodd" clipRule="evenodd" d="M10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20ZM7.09239 11.25C7.2441 11.25 7.38969 11.3056 7.51031 11.3977C8.22101 11.9399 9.10734 12.2617 10.0684 12.2617C11.0315 12.2617 11.9194 11.9386 12.6308 11.3944C12.7486 11.3043 12.8909 11.25 13.0392 11.25C13.4824 11.25 13.7777 11.701 13.524 12.0645C12.758 13.1616 11.4898 13.8787 10.055 13.8787C8.62787 13.8787 7.36563 13.1693 6.59844 12.0821C6.33693 11.7116 6.63884 11.25 7.09239 11.25ZM13.0877 7.89911C13.0877 8.53033 12.5785 9.04204 11.9504 9.04204C11.3224 9.04204 10.8132 8.53033 10.8132 7.89911C10.8132 7.26789 11.3224 6.75618 11.9504 6.75618C12.5785 6.75618 13.0877 7.26789 13.0877 7.89911ZM8.15935 9.04204C8.78744 9.04204 9.2966 8.53033 9.2966 7.89911C9.2966 7.26789 8.78744 6.75618 8.15935 6.75618C7.53126 6.75618 7.02209 7.26789 7.02209 7.89911C7.02209 8.53033 7.53126 9.04204 8.15935 9.04204Z"></path></svg>
+                            <p className="pl-2 text-sm">Profile</p>
                         </div>
-                        <div className=" inherit border-t-2 h-12 flex items-center justify-start pl-2">
-                            <p>Log Out</p>
+                        <div className="inherit border-t-2 h-12 flex items-center justify-start pl-2">
+                            <svg fill="none" height="24" role="img" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M16.293 17.707 22 12l-5.707-5.707-1.414 1.414L18.17 11H9.1v2h9.072l-3.293 3.293 1.414 1.414Z" fill="black"></path><path clipRule="evenodd" d="M9.8 3.2v2H4v13.6h5.8v2H2V3.2h7.8Z" fill="black" fillRule="evenodd"></path></svg>
+                            <p className="pl-2 text-sm">Log Out</p>
                         </div>
                     </div>
                 </div>
