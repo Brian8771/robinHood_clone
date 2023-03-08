@@ -17,13 +17,13 @@ function App() {
         <Route path='login' element={<PublicLogin />} />
         <Route path='signup' element={<PublicSignUp />} />
         {/* Protected Routes */}
-        <Route element={<RequireAuth />}>
-          <Route element={<PersistLogin />}>
-            <Route path='home' element={<HomeLayout />}>
-              <Route index element={<Home />} />
-            </Route>
+        {/* <Route element={<RequireAuth />}> */}
+        <Route element={<PersistLogin />}>
+          <Route path='home' element={<HomeLayout />}>
+            <Route index element={<Home />} />
           </Route>
         </Route>
+        {/* </Route> */}
       </Route>
     </Routes>
   )

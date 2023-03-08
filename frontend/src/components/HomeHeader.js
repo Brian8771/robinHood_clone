@@ -3,9 +3,10 @@ import '../index.css'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useSendLogoutMutation } from "../features/auth/authApiSlice";
 
+const Home_REGEX = /^\/home(\/)?$/
 const HomeHeader = () => {
 
-    const { location } = useLocation()
+    const { pathname } = useLocation()
     const navigate = useNavigate()
 
     const { firstname, lastname } = useAuth();
@@ -24,6 +25,7 @@ const HomeHeader = () => {
 
 
     document.addEventListener('click', (e) => {
+        if (!Home_REGEX.test(pathname)) return
         const clicker = document.getElementsByClassName('clicker')[0];
         const box = document.getElementsByClassName('clickerBox')[0];
 

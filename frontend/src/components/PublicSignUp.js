@@ -1,9 +1,16 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useNavigate } from 'react-router-dom'
 import useTitle from "../hooks/useTitle"
 import robinLogo from '../images/robinhood-black.png'
 import robinSignSm from '../images/robinhood-signup.png'
 import robin_1 from '../images/robinhood-pic-1.png'
 import '../index.css'
+import { useAddNewUserMutation } from '../features/User/userApiSlice.js'
+import usePersist from "../hooks/usePersist"
+import { setCredentials } from "../features/auth/authSlice"
+import { useDispatch } from "react-redux"
+import { useLoginMutation } from "../features/auth/authApiSlice"
+
 
 const PublicSignUp = () => {
     useTitle('Create Account')
@@ -12,16 +19,55 @@ const PublicSignUp = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
+    const [persist, setPersist] = usePersist()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const [addNewUser, {
+        isSuccess,
+        isError,
+        error
+    }] = useAddNewUserMutation()
+
+    const [login, { isLoading }] = useLoginMutation()
 
     const handlefirstNameInput = (e) => setFirstName(e.target.value)
     const handleLastNameInput = (e) => setLastName(e.target.value)
     const handleUsernameInput = (e) => setUsername(e.target.value)
     const handlePWDInput = (e) => setPassword(e.target.value)
-    const handleShowPWDInput = () => setShowPassword(prev => !prev)
+    const handleShowPWDInput = (e) => setShowPassword(prev => {
+        e.preventDefault()
+        return !prev
+    })
 
+
+    const onCreateUser = async (e) => {
+        e.preventDefault();
+        setPersist(true)
+        await addNewUser({ firstName, lastName, username, password })
+        const { accessToken } = await login({ username, password }).unwrap();
+        dispatch(setCredentials({ accessToken }))
+        navigate('/home')
+
+    }
+
+    // useEffect(() => {
+
+    //     if (!isLoading) {
+    //         setFirstName('')
+    //         setLastName('')
+    //         setPassword('')
+    //         setUsername('')
+    //     }
+
+    // }, [isSuccess])
+
+    if (isError) {
+        console.log(error)
+    }
     return (
         <>
-            < header className="flex justify-center bg-white items-center border-b border solid border-black h-[69px] border-t-0 relative w-full top-0  md:hidden" >
+            <header className="flex justify-center bg-white items-center border-b border solid border-black h-[69px] border-t-0 relative w-full top-0  md:hidden" >
                 <img className='h-14 w-14' src={robinLogo} alt='logo' />
             </header >
             <main className="overflow-hidden">
@@ -78,7 +124,7 @@ const PublicSignUp = () => {
                     </div>
                     <div className="w-full min-h-full  max-h-[100vh] md:w-1/2 overflow-hidden">
 
-                        <form className="max-h-[80%] min-h-[80%] px-6 md:px-[64px] mb-12 pt-6 md:pt-[110px] md:overflow-y-auto" onSubmit={(e) => e.preventDefault()}>
+                        <form id='create-user' onSubmit={onCreateUser} className="max-h-[80%] min-h-[80%] px-6 md:px-[64px] mb-12 pt-6 md:pt-[110px] md:overflow-y-auto">
                             <h2 className="text-[15px] mb-12 md:text-[21px]">
                                 Enter your first and last name as they appear on your government ID.
                             </h2>
@@ -127,15 +173,15 @@ const PublicSignUp = () => {
                                 />
                                 <button onClick={handleShowPWDInput} className="h-6 w-6 flex justify-center items-center">
                                     {showPassword ?
-                                        <svg height="16" role="img" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M13.719 1.878 1.775 13.822l1.06 1.06 2.787-2.786c.7.223 1.491.358 2.378.358 5.09 0 7-4.454 7-4.454s-.696-1.625-2.37-2.912l2.15-2.15-1.061-1.06Zm-3.54 5.66L7.54 10.18a2.23 2.23 0 0 0 2.64-2.64Z" fill="black)" fill-rule="black"></path><path d="M5.794 7.689A2.232 2.232 0 0 1 7.69 5.794l2.06-2.06A7.982 7.982 0 0 0 8 3.545C2.91 3.545 1 8 1 8s.574 1.34 1.933 2.55l2.861-2.86Z" fill="black"></path></svg>
-                                        : <svg fill="none" height="16" role="img" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M1 8s1.91-4.455 7-4.455S15 8 15 8s-1.91 4.454-7 4.454S1 8 1 8Zm4.773 0A2.23 2.23 0 0 0 8 10.227 2.23 2.23 0 0 0 10.227 8 2.23 2.23 0 0 0 8 5.773 2.23 2.23 0 0 0 5.773 8Z" fill="black" fill-rule="evenodd"></path></svg>
+                                        <svg height="16" role="img" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M13.719 1.878 1.775 13.822l1.06 1.06 2.787-2.786c.7.223 1.491.358 2.378.358 5.09 0 7-4.454 7-4.454s-.696-1.625-2.37-2.912l2.15-2.15-1.061-1.06Zm-3.54 5.66L7.54 10.18a2.23 2.23 0 0 0 2.64-2.64Z" fill="black)" fillRule="black"></path><path d="M5.794 7.689A2.232 2.232 0 0 1 7.69 5.794l2.06-2.06A7.982 7.982 0 0 0 8 3.545C2.91 3.545 1 8 1 8s.574 1.34 1.933 2.55l2.861-2.86Z" fill="black"></path></svg>
+                                        : <svg fill="none" height="16" role="img" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M1 8s1.91-4.455 7-4.455S15 8 15 8s-1.91 4.454-7 4.454S1 8 1 8Zm4.773 0A2.23 2.23 0 0 0 8 10.227 2.23 2.23 0 0 0 10.227 8 2.23 2.23 0 0 0 8 5.773 2.23 2.23 0 0 0 5.773 8Z" fill="black" fillRule="evenodd"></path></svg>
                                     }
                                 </button>
                             </div>
                             <p className="text-[13px] mt-6 text-[#99a0a3]">This is not a real stock market app all that you do on the site will have no real impact on the stock market</p>
                         </form>
                         <div className="justify-center py-2 border-none px-6 md:py-8 flex items-center max-h-[20%] md:border-t md:border-solid md:border-black md:justify-end">
-                            <button className="w-full px-[48px] h-12 bg-black text-white rounded-full md:w-auto">
+                            <button form='create-user' className="w-full px-[48px] h-12 bg-black text-white rounded-full md:w-auto">
                                 Sign up
                             </button>
                         </div>

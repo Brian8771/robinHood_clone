@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 // @desc get all users
 // @route GET /users
@@ -31,7 +32,7 @@ const getUserById = async (req, res) => {
 // @route POST /users
 // @access Private
 const createNewUser = async (req, res) => {
-    const { username, firstName, lastName, password, buyingPower } = req.body
+    const { username, firstName, lastName, password } = req.body
 
     // Confirm data
     if (!username || !password || !firstName || !lastName) {
@@ -48,17 +49,41 @@ const createNewUser = async (req, res) => {
     // Hash password
     const hashedPwd = await bcrypt.hash(password, 10) // salt rounds
 
-    const userObject = (!buyingPower)
-        ? { username, 'password': hashedPwd, firstName, lastName }
-        : { username, 'password': hashedPwd, buyingPower, firstName, lastName }
+    const userObject = { username, 'password': hashedPwd, buyingPower: 100000, firstName, lastName }
 
     // Create and store new user
     const user = await User.create(userObject)
-    if (user) { // created
-        res.status(201).json({ message: `New user ${username} created` })
-    } else {
-        res.status(400).json({ message: 'Invalid user data recieved' })
-    }
+    const foundUser = await User.findOne({ username }).exec()
+
+    const accessToken = jwt.sign(
+        {
+            "UserInfo": {
+                "username": foundUser.username,
+                "firstname": foundUser.firstName,
+                "lastname": foundUser.lastName,
+                "buyingPower": foundUser.buyingPower
+            }
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: '15m' }
+    )
+
+    const refreshToken = jwt.sign(
+        { "username": foundUser.username },
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: '7d' }
+    )
+
+    // Create secure cookie with refresh token
+    res.cookie('jwt', refreshToken, {
+        httpOnly: true, //accessible only by web server
+        secure: true, //https
+        sameSite: 'None', //cross-site cookie
+        maxAge: 7 * 24 * 60 * 60 * 1000 //cookie expiry: set to match rT
+    })
+
+    // Send accessToken containing username and roles
+    res.json({ accessToken })
 }
 
 // @desc update a user
