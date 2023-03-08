@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
 const { el } = require('date-fns/locale');
 const apiKey = process.env.FINNHUB_API
 
-console.log(apiKey)
+
 
 const getAllStocksFromUser = async (req, res) => {
     const { user } = req.body

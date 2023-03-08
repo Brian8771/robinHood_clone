@@ -1,9 +1,27 @@
 import useAuth from "../hooks/useAuth";
 import '../index.css'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { useSendLogoutMutation } from "../features/auth/authApiSlice";
 
 const HomeHeader = () => {
 
+    const { location } = useLocation()
+    const navigate = useNavigate()
+
     const { firstname, lastname } = useAuth();
+
+    const [sendLogout, {
+        isLoading,
+        isSuccess,
+        isError,
+        error
+    }] = useSendLogoutMutation()
+
+    const logoutButton = (e) => {
+        sendLogout()
+        navigate('/')
+    }
+
 
     document.addEventListener('click', (e) => {
         const clicker = document.getElementsByClassName('clicker')[0];
@@ -50,7 +68,7 @@ const HomeHeader = () => {
                         </div>
                         <div className="inherit border-t-2 h-12 flex items-center justify-start pl-2">
                             <svg fill="none" height="24" role="img" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M16.293 17.707 22 12l-5.707-5.707-1.414 1.414L18.17 11H9.1v2h9.072l-3.293 3.293 1.414 1.414Z" fill="black"></path><path clipRule="evenodd" d="M9.8 3.2v2H4v13.6h5.8v2H2V3.2h7.8Z" fill="black" fillRule="evenodd"></path></svg>
-                            <p className="pl-2 text-sm">Log Out</p>
+                            <p onClick={logoutButton} className="pl-2 text-sm">Log Out</p>
                         </div>
                     </div>
                 </div>

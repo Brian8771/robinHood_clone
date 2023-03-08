@@ -6,6 +6,7 @@ import Public from './components/Public';
 import PublicLogin from './components/PublicLogin';
 import PublicSignUp from './components/PublicSignUp';
 import PersistLogin from './components/PersistLogin';
+import RequireAuth from './components/requireAuth';
 
 function App() {
   return (
@@ -16,10 +17,11 @@ function App() {
         <Route path='login' element={<PublicLogin />} />
         <Route path='signup' element={<PublicSignUp />} />
         {/* Protected Routes */}
-        <Route element={<PersistLogin />}>
-
-          <Route path='home' element={<HomeLayout />}>
-            <Route index element={<Home />} />
+        <Route element={<RequireAuth />}>
+          <Route element={<PersistLogin />}>
+            <Route path='home' element={<HomeLayout />}>
+              <Route index element={<Home />} />
+            </Route>
           </Route>
         </Route>
       </Route>

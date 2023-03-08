@@ -15,6 +15,7 @@ const PublicLogin = () => {
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
     const [persist, setPersist] = usePersist()
+    const [showError, setShowError] = useState(false)
     const [login, { isLoading }] = useLoginMutation()
 
     const navigate = useNavigate()
@@ -27,13 +28,22 @@ const PublicLogin = () => {
         try {
             const { accessToken } = await login({ username, password }).unwrap();
             dispatch(setCredentials({ accessToken }))
+            setShowError(false)
             navigate('/home')
         }
         catch (err) {
-
+            setShowError(true)
         }
     }
 
+    const handleRefresh = (e) => {
+        e.preventDefault()
+        setUsername('')
+        setPassword('')
+        setShowPassword(false)
+        setPersist(false)
+        setShowError(false)
+    }
 
     const handleUserInput = (e) => setUsername(e.target.value)
     const handlePasswordInput = (e) => setPassword(e.target.value)
@@ -91,6 +101,21 @@ const PublicLogin = () => {
                             }
                             <span className="ml-3">Keep me logged in for up to 30 days</span>
                         </label>
+                        {showError && <div className="mb-6 flex h-16 md:mb-3 bg-[#f5f8fa] py-2 rounded">
+                            <div className="flex items-center p-4">
+                                <svg fill="none" height="24" role="img" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M12 20c4.395 0 8-3.605 8-8s-3.605-8-8-8-8 3.605-8 8 3.605 8 8 8Zm10-8c0 5.5-4.5 10-10 10S2 17.5 2 12 6.5 2 12 2s10 4.5 10 10Z" fill="black" fillRule="evenodd"></path><path d="M13 9V7h-2v2h2Zm0 2h-2v6h2v-6Z" fill="black"></path></svg>
+                            </div>
+                            <div className="block md:hidden py-2">
+                                <p className="text-xs">Unable to log in with provided credentials. <span onClick={handleRefresh} className="border-b border-black font-bold cursor-pointer">Please reload and retry.</span></p>
+
+                            </div>
+                            <div className="hidden md:block py-2">
+                                <p className="text-xs">Unable to log in with provided credentials.</p>
+                                <div onClick={handleRefresh} className="border-b border-black w-fit mt-1  cursor-pointer">
+                                    <p className="text-xs font-bold">Please reload and retry.</p>
+                                </div>
+                            </div>
+                        </div>}
                         <div className="mb-4 flex justify-center md:block">
                             <button className="text-[13px] h-11 px-12 font-medium bg-black rounded-full text-white w-full md:w-fit">Log In</button>
                         </div>
