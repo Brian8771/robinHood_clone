@@ -3,13 +3,27 @@ import github from '../images/github.png'
 import linkedIn from '../images/linkedIn.png'
 import { useNavigate } from 'react-router-dom'
 import useTitle from '../hooks/useTitle'
+import { useState, useRef, useEffect } from 'react'
 
 const Public = () => {
     useTitle('Robinhood | Home')
     const navigate = useNavigate();
+    const [toggle, setToggle] = useState(false)
+    const [windowSize, setWindowSize] = useState(window.innerWidth);
 
     const goToSignUp = () => navigate('/signup');
     const goToLogin = () => navigate('/login');
+
+    window.addEventListener('resize', () => {
+
+        setWindowSize(window.innerWidth)
+
+        if (windowSize >= 770) {
+            setToggle(false)
+        }
+
+    })
+
 
 
     return (
@@ -36,7 +50,8 @@ const Public = () => {
                     </div>
                     <div className="h-2/3 flex items-center md:hidden">
                         <button className="text-[13px] border-solid border border-black bg-white text-black rounded-full px-7 h-full font-semibold whitespace-nowrap mr-3">Log in</button>
-                        <svg aria-hidden="true" fill="rgb(0, 0, 0)" height="30" width="30"><g><rect fill="transparent" height="30" width="30" x="0" y="0"></rect><rect height="3" width="30" x="0" y="7"></rect></g><g><rect fill="transparent" height="30" width="30" x="0" y="0"></rect><rect height="3" width="30" x="0" y="20"></rect></g></svg>
+                        <svg className='cursor-pointer' onClick={() => setToggle(prev => !prev)} aria-hidden="true" fill="rgb(0, 0, 0)" height="30" width="30"><g><rect fill="transparent" height="30" width="30" x="0" y="0"></rect><rect height="3" width="30" x="0" y="7"></rect></g><g><rect fill="transparent" height="30" width="30" x="0" y="0"></rect><rect height="3" width="30" x="0" y="20"></rect></g></svg>
+
                     </div>
                     <div className="hidden h-2/3 md:flex">
                         <button className="text-[13px] border-solid border border-black bg-white text-black rounded-full px-7 h-full font-semibold whitespace-nowrap" onClick={goToLogin}>Log in</button>
@@ -45,26 +60,34 @@ const Public = () => {
                     </div>
                 </nav>
             </header>
-            <main>
-                <div className="grid-placer min-w-full h-full min-h-full grid justify-center w-screen min-w-screen">
-                    <div className='z-10 mt-10 text-center w-[400px] md:w-[650px] lg:w-[750px]  justify-center'>
-                        <div className='text-5xl md:text-6xl lg:text-7xl z-10'>Join a new generation of investors</div>
-                        <button className='mt-10 rounded-full bg-black text-white px-8 py-3 font-bold  hover:bg-slate-800 duration-500' onClick={goToSignUp}>Sign up</button>
-                    </div>
+            {toggle ?
+                <div className='pt-24'>
+                    <p onClick={goToSignUp} className='pl-4 pb-2 pt-2 text-black text-4xl hover:-translate-y-2 hover:text-[#00c806] w-fit cursor-pointer'>Sign Up</p>
+                </div>
+                :
+                <div>
+                    <main>
+                        <div className="grid-placer min-w-full h-full min-h-full grid justify-center w-screen min-w-screen">
+                            <div className='z-10 mt-10 text-center w-[400px] md:w-[650px] lg:w-[750px]  justify-center'>
+                                <div className='text-5xl md:text-6xl lg:text-7xl z-10'>Join a new generation of investors</div>
+                                <button className='mt-10 rounded-full bg-black text-white px-8 py-3 font-bold  hover:bg-slate-800 duration-500' onClick={goToSignUp}>Sign up</button>
+                            </div>
 
-                    <img className='w-screen h-screen max-w-screen min-w-screen max-h-screen min-h-screen object-cover -z-1' src={background} alt='background' />
-                </div>
-            </main>
-            <footer className=' h-24 w-full flex border-y border-black'>
-                <div className='px-2 text-center w-1/2 flex items-center justify-center md:p-0'>
-                    <p className=' text-lg underline leading-7'>This is not a real stock trading website</p>
-                </div>
-                <div className='w-1/2 flex justify-around items-center border-l border-black'>
+                            <img className='w-screen h-screen max-w-screen min-w-screen max-h-screen min-h-screen object-cover -z-1' src={background} alt='background' />
+                        </div>
+                    </main>
+                    <footer className=' h-24 w-full flex border-y border-black'>
+                        <div className='px-2 text-center w-1/2 flex items-center justify-center md:p-0'>
+                            <p className=' text-lg underline leading-7'>This is not a real stock trading website</p>
+                        </div>
+                        <div className='w-1/2 flex justify-around items-center border-l border-black'>
 
-                    <a className='findMe' href='https://github.com/Brian8771'><img style={{ height: '60px', width: '60px' }} src={github} alt='github' /></a>
-                    <a className='findMe' href='https://www.linkedin.com/in/brian-aguilar-088438247/'><img style={{ height: '60px', width: '60px', borderRadius: '50%' }} src={linkedIn} alt='linkedIn' /></a>
+                            <a className='findMe' href='https://github.com/Brian8771'><img style={{ height: '60px', width: '60px' }} src={github} alt='github' /></a>
+                            <a className='findMe' href='https://www.linkedin.com/in/brian-aguilar-088438247/'><img style={{ height: '60px', width: '60px', borderRadius: '50%' }} src={linkedIn} alt='linkedIn' /></a>
+                        </div>
+                    </footer>
                 </div>
-            </footer>
+            }
         </div>
     )
 }

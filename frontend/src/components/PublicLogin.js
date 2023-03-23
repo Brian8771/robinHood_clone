@@ -7,6 +7,7 @@ import { setCredentials } from "../features/auth/authSlice"
 import { useLoginMutation } from "../features/auth/authApiSlice"
 import { useDispatch } from "react-redux"
 import usePersist from "../hooks/usePersist"
+import '../index.css'
 
 
 const PublicLogin = () => {
@@ -71,7 +72,7 @@ const PublicLogin = () => {
                             <input
                                 className="text-[13px] h-[34px] text-sm outline-none  w-11/12"
                                 id='username'
-                                // onClick=
+
                                 type='text'
                                 value={username}
                                 autoComplete='off'

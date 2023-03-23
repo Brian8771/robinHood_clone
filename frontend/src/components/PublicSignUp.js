@@ -15,9 +15,13 @@ import { useLoginMutation } from "../features/auth/authApiSlice"
 const PublicSignUp = () => {
     useTitle('Create Account')
     const [firstName, setFirstName] = useState('')
+    const [errFirstname, setErrFirstname] = useState(false)
     const [lastName, setLastName] = useState('')
+    const [errLastname, setErrLastname] = useState(false)
     const [username, setUsername] = useState('')
+    const [errUsername, setErrUsername] = useState(false)
     const [password, setPassword] = useState('')
+    const [errPassword, setErrPassword] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
     const [persist, setPersist] = usePersist()
     const navigate = useNavigate();
@@ -43,13 +47,30 @@ const PublicSignUp = () => {
 
     const onCreateUser = async (e) => {
         e.preventDefault();
-        setPersist(true)
-        await addNewUser({ firstName, lastName, username, password })
-        const { accessToken } = await login({ username, password }).unwrap();
-        dispatch(setCredentials({ accessToken }))
-        navigate('/home')
+        try {
+            if (!firstName) setErrFirstname(true)
+            if (!lastName) setErrLastname(true)
+            if (!username) setErrUsername(true)
+            if (!password) setErrPassword(true)
+            if (errFirstname || errLastname || errUsername || errPassword) throw new error
+            setPersist(true)
+            await addNewUser({ firstName, lastName, username, password })
+            const { accessToken } = await login({ username, password }).unwrap();
+            dispatch(setCredentials({ accessToken }))
+            navigate('/home')
+        }
+        catch (err) {
 
+        }
     }
+
+    useEffect(() => {
+        if (firstName) setErrFirstname(false)
+        if (lastName) setErrLastname(false)
+        if (username) setErrUsername(false)
+        if (password) setErrPassword(false)
+
+    }, [firstName, lastName, username, password])
 
     // useEffect(() => {
 
@@ -62,9 +83,9 @@ const PublicSignUp = () => {
 
     // }, [isSuccess])
 
-    if (isError) {
-        console.log(error)
-    }
+    // if (isError) {
+    //     console.log(error)
+    // }
     return (
         <>
             <header className="flex justify-center bg-white items-center border-b border solid border-black h-[69px] border-t-0 relative w-full top-0  md:hidden" >
@@ -86,8 +107,8 @@ const PublicSignUp = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-row">
-                    <div className="background-color w-1/2  pb-[36px] overflow-hidden flex-col h-full min-h-full max-h-[100vh] border-r-black border-solid border hidden md:block">
+                <div className="flex flex-row min-h-screen">
+                    <div className="background-color w-1/2  pb-[36px] overflow-hidden flex-col h-full min-h-screen max-h-[100vh] border-r-black border-solid border hidden md:block">
 
                         <div className="mt-[40px] mb-[80px]">
                             <div className="w-[147px] h-[48px] mx-16 flex justify-start items-center">
@@ -128,55 +149,79 @@ const PublicSignUp = () => {
                             <h2 className="text-[15px] mb-12 md:text-[21px]">
                                 Enter your first and last name as they appear on your government ID.
                             </h2>
-                            <div className="w-full flex font-light justify-center items-center py-4 px-3.5 border-solid border border-[#d5d8db] focus-within:border-black duration-700 mb-6">
-                                <input
-                                    className="w-full h-7 text-[20px] outline-none"
-                                    value={firstName}
-                                    name='firstName'
-                                    onChange={handlefirstNameInput}
-                                    autoComplete='off'
-                                    type='text'
-                                    placeholder="First name"
-                                />
+                            <div className="mb-6">
+                                <div className={errFirstname ?
+                                    "w-full flex font-light justify-center items-center py-4 px-3.5 border-solid border border-[#ff6936]  duration-700"
+                                    :
+                                    "w-full flex font-light justify-center items-center py-4 px-3.5 border-solid border border-[#d5d8db] focus-within:border-black duration-700"}>
+                                    <input
+                                        className="w-full h-7 text-[20px] outline-none"
+                                        value={firstName}
+                                        name='firstName'
+                                        onChange={handlefirstNameInput}
+                                        autoComplete='off'
+                                        type='text'
+                                        placeholder="First name"
+                                    />
+                                </div>
+                                {errFirstname && <p className="text-xs text-[#ff6936]">Please enter your first name</p>}
                             </div>
-                            <div className="w-full flex justify-center font-light items-center py-4 px-3.5 border-solid border border-[#d5d8db] focus-within:border-black duration-700 mb-6">
-                                <input
-                                    className="w-full h-7 text-[20px] outline-none"
-                                    value={lastName}
-                                    name='lastName'
-                                    onChange={handleLastNameInput}
-                                    autoComplete='off'
-                                    type='text'
-                                    placeholder="Last name"
-                                />
+                            <div className="mb-6">
+                                <div className={errLastname ?
+                                    "w-full flex font-light justify-center items-center py-4 px-3.5 border-solid border border-[#ff6936]  duration-700"
+                                    :
+                                    "w-full flex font-light justify-center items-center py-4 px-3.5 border-solid border border-[#d5d8db] focus-within:border-black duration-700"}>
+                                    <input
+                                        className="w-full h-7 text-[20px] outline-none"
+                                        value={lastName}
+                                        name='lastName'
+                                        onChange={handleLastNameInput}
+                                        autoComplete='off'
+                                        type='text'
+                                        placeholder="Last name"
+                                    />
+                                </div>
+                                {errLastname && <p className="text-xs text-[#ff6936]">Please enter your last name</p>}
                             </div>
-                            <div className="w-full flex font-light justify-center items-center py-4 px-3.5 border-solid border border-[#d5d8db] focus-within:border-black duration-700 mb-6">
-                                <input
-                                    className="w-full h-7 text-[20px] outline-none"
-                                    value={username}
-                                    name='userName'
-                                    onChange={handleUsernameInput}
-                                    autoComplete='off'
-                                    type='text'
-                                    placeholder="Username"
-                                />
+                            <div className="mb-6">
+                                <div className={errUsername ?
+                                    "w-full flex font-light justify-center items-center py-4 px-3.5 border-solid border border-[#ff6936]  duration-700"
+                                    :
+                                    "w-full flex font-light justify-center items-center py-4 px-3.5 border-solid border border-[#d5d8db] focus-within:border-black duration-700"}>
+                                    <input
+                                        className="w-full h-7 text-[20px] outline-none"
+                                        value={username}
+                                        name='userName'
+                                        onChange={handleUsernameInput}
+                                        autoComplete='off'
+                                        type='text'
+                                        placeholder="Username"
+                                    />
+                                </div>
+                                {errUsername && <p className="text-xs text-[#ff6936]">Please enter a username</p>}
                             </div>
-                            <div className="w-full flex justify-center font-light items-center py-4 px-3.5 border-solid border border-[#d5d8db] focus-within:border-black duration-700 mb-6">
-                                <input
-                                    className="w-full h-7 text-[20px] outline-none"
-                                    value={password}
-                                    name={'password'}
-                                    onChange={handlePWDInput}
-                                    autoComplete='off'
-                                    type={showPassword ? 'text' : 'password'}
-                                    placeholder="Password"
-                                />
-                                <button onClick={handleShowPWDInput} className="h-6 w-6 flex justify-center items-center">
-                                    {showPassword ?
-                                        <svg height="16" role="img" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M13.719 1.878 1.775 13.822l1.06 1.06 2.787-2.786c.7.223 1.491.358 2.378.358 5.09 0 7-4.454 7-4.454s-.696-1.625-2.37-2.912l2.15-2.15-1.061-1.06Zm-3.54 5.66L7.54 10.18a2.23 2.23 0 0 0 2.64-2.64Z" fill="black)" fillRule="black"></path><path d="M5.794 7.689A2.232 2.232 0 0 1 7.69 5.794l2.06-2.06A7.982 7.982 0 0 0 8 3.545C2.91 3.545 1 8 1 8s.574 1.34 1.933 2.55l2.861-2.86Z" fill="black"></path></svg>
-                                        : <svg fill="none" height="16" role="img" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M1 8s1.91-4.455 7-4.455S15 8 15 8s-1.91 4.454-7 4.454S1 8 1 8Zm4.773 0A2.23 2.23 0 0 0 8 10.227 2.23 2.23 0 0 0 10.227 8 2.23 2.23 0 0 0 8 5.773 2.23 2.23 0 0 0 5.773 8Z" fill="black" fillRule="evenodd"></path></svg>
-                                    }
-                                </button>
+                            <div className="mb-6">
+                                <div className={errPassword ?
+                                    "w-full flex font-light justify-center items-center py-4 px-3.5 border-solid border border-[#ff6936]  duration-700"
+                                    :
+                                    "w-full flex font-light justify-center items-center py-4 px-3.5 border-solid border border-[#d5d8db] focus-within:border-black duration-700"}>
+                                    <input
+                                        className="w-full h-7 text-[20px] outline-none"
+                                        value={password}
+                                        name={'password'}
+                                        onChange={handlePWDInput}
+                                        autoComplete='off'
+                                        type={showPassword ? 'text' : 'password'}
+                                        placeholder="Password"
+                                    />
+                                    <button onClick={handleShowPWDInput} className="h-6 w-6 flex justify-center items-center">
+                                        {showPassword ?
+                                            <svg height="16" role="img" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M13.719 1.878 1.775 13.822l1.06 1.06 2.787-2.786c.7.223 1.491.358 2.378.358 5.09 0 7-4.454 7-4.454s-.696-1.625-2.37-2.912l2.15-2.15-1.061-1.06Zm-3.54 5.66L7.54 10.18a2.23 2.23 0 0 0 2.64-2.64Z" fill="black)" fillRule="black"></path><path d="M5.794 7.689A2.232 2.232 0 0 1 7.69 5.794l2.06-2.06A7.982 7.982 0 0 0 8 3.545C2.91 3.545 1 8 1 8s.574 1.34 1.933 2.55l2.861-2.86Z" fill="black"></path></svg>
+                                            : <svg fill="none" height="16" role="img" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M1 8s1.91-4.455 7-4.455S15 8 15 8s-1.91 4.454-7 4.454S1 8 1 8Zm4.773 0A2.23 2.23 0 0 0 8 10.227 2.23 2.23 0 0 0 10.227 8 2.23 2.23 0 0 0 8 5.773 2.23 2.23 0 0 0 5.773 8Z" fill="black" fillRule="evenodd"></path></svg>
+                                        }
+                                    </button>
+                                </div>
+                                {errPassword && <p className="text-xs text-[#ff6936]">Please enter a password</p>}
                             </div>
                             <p className="text-[13px] mt-6 text-[#99a0a3]">This is not a real stock market app all that you do on the site will have no real impact on the stock market</p>
                         </form>

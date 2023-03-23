@@ -48,7 +48,7 @@ const HomeHeader = () => {
                 </svg>
             </div>
             <div className="flex items-center mx-auto w-[1024px]">
-                <div className="flex items-center border-slate-200 border rounded w-96 h-9 focus-within:shadow-lg focus-within:shadow-black-500/120">
+                <div className="flex items-center border-slate-200 border rounded w-[420px] h-9 focus-within:shadow-lg focus-within:shadow-black-500/120">
                     <svg className="ml-3" height="24" role="img" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M15.32 16.734a8 8 0 1 1 1.54-1.288l4.847 4.847-1.414 1.414-4.973-4.973ZM17 10a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z" className="fill-[#697277]" fillRule="evenodd"></path></svg>
                     <input
                         type='text'
